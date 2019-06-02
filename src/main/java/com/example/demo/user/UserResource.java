@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 import org.springframework.hateoas.Resource;
@@ -30,6 +35,22 @@ public class UserResource {
 	public List<User> getAllUsers() {
 		return service.getAll();
 	}
+
+	// TBD: Get list of all users filtered
+	// Current this causes the other methods to break, requires definition of FilterProvider even if no filtering 
+	// Until the @JsonFilter annotation is uncommented in User this will not be activated
+	@GetMapping(path="/users-filter")
+	public MappingJacksonValue getAllUsersFilter() {
+		List<User> allUsers = service.getAll();
+		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter
+				.filterOutAllExcept("id", "name");
+		FilterProvider filters = new SimpleFilterProvider()
+				.addFilter("UsersFilter", filter);
+		MappingJacksonValue mapping = new MappingJacksonValue(allUsers);
+		mapping.setFilters(filters);
+		return mapping;
+	}
+
 	
 	// Get specific user
 	@GetMapping(path="/users/{id}")
