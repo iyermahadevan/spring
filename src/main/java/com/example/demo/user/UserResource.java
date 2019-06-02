@@ -53,8 +53,10 @@ public class UserResource {
 				.path("/{id}")
 				.buildAndExpand(savedUser.getId())
 				.toUri();
-		return ResponseEntity.created(location).build();
+		return ResponseEntity.created(location)
+				.body(savedUser);
 	}
+
 	
 	// Delete specific user
 	@DeleteMapping(path="/users/{id}")

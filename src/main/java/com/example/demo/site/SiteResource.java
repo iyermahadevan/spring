@@ -51,7 +51,8 @@ public class SiteResource {
 				.path("/{id}")
 				.buildAndExpand(savedSite.getId())
 				.toUri();
-		return ResponseEntity.created(location).build();
+		return ResponseEntity.created(location)
+				.body(savedSite);
 	}
 
 	@DeleteMapping(path="/sites/{id}")
