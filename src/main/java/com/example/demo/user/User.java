@@ -2,6 +2,9 @@ package com.example.demo.user;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
@@ -14,12 +17,20 @@ import io.swagger.annotations.ApiModelProperty;
 // @JsonFilter("UsersFilter")
 // Need to find a way to do this so that methods other than getUsersFilter are not impacted
 @ApiModel(description="All details about the user")
+@Entity
 public class User {
 
+	@Id
+	@GeneratedValue
 	private Integer id;
 	private String name;
 	private Date birthDate;
 	private String code;
+	
+	// Hibernate needs this constructor
+	public User() {
+		
+	}
 
 	public User(Integer id, String name, Date birthDate) {
 		super();

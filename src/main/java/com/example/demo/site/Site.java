@@ -2,6 +2,10 @@ package com.example.demo.site;
 
 import java.util.Date;
 
+import javax.validation.constraints.Size;
+
+import io.swagger.annotations.ApiModelProperty;
+
 public class Site {
 
 	public Site(Integer id, String credentials, Date creationDate, String config) {
@@ -34,6 +38,9 @@ public class Site {
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
+	
+	@Size(min=2, message="Site configuration should have at least 2 characters")
+	@ApiModelProperty(value="The configuration for the site", example="www.example.com")
 	public String getConfig() {
 		return config;
 	}
