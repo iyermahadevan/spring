@@ -6,3 +6,4 @@ Examples Of
 5. JsonFilter: Filtering Responses
 6. CustomizedResponseEntityExceptionHandler: Generating org wide custom exceptions
 7. JPA: create data.sql, use localhost:8080/h2-console, set JDBC URL=jdbc:h2:mem:testdb
+8. Added Post to User, OneToMany relationship
