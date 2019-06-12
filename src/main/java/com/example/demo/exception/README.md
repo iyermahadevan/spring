@@ -1,0 +1,1 @@
+Create a custom exception so that all errors are in some normalized form
